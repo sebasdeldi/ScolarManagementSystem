@@ -1,0 +1,8 @@
+<h1>Landing page</h1>
+<% if current_user %>
+	<%= link_to user_path(current_user) do %>
+	  <button type="button" class="btn btn-danger fixedbutton">Visitar Perfil</button>
+	<% end %>
+<% end %>
+
+

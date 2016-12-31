@@ -1,0 +1,74 @@
+<div class="custom-container">
+  <div class="row">
+    <div class="col-sm-12">
+      <ul class="nav nav-tabs">
+        <li class="active">
+          <a href="#1" data-toggle="tab">Estudiantes <span class="badge"><%= @students.count %></span></a>
+        </li>
+        <li><a href="#2" data-toggle="tab">Profesores <span class="badge"><%= @teachers.count %></span> </a>
+        </li>
+      </ul>
+
+      <div class="tab-content ">
+        <div class="tab-pane active" id="1">
+          <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Nombres</th>
+                  <th>Apellidos</th>
+                  <th>Acudiente</th>
+                  <th>Teléfono</th>
+                  <th>Identificación</th>
+                  <th>Perfil</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @students.each do |student| %>
+                  <tr  class="<%= 'danger' if !student.debts.blank? %>">
+                    <td><%= student.names %></td>
+                    <td><%= student.last_names %></td>
+                    <td><%= student.guardian %></td>
+                    <td><%= student.phone %></td>
+                    <td><%= student.identification %></td>
+                    <td>
+                      <%= link_to student do%>
+                        <i class="glyphicon glyphicon-eye-open"></i>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+        </div>
+        <div class="tab-pane" id="2">
+          <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Nombres</th>
+                  <th>Apellidos</th>
+                  <th>Teléfono</th>
+                  <th>Identificación</th>
+                  <th>Perfil</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @teachers.each do |teacher| %>
+                  <tr>
+                    <td><%= teacher.names %></td>
+                    <td><%= teacher.last_names %></td>
+                    <td><%= teacher.phone %></td>
+                    <td><%= teacher.identification %></td>
+                    <td>
+                      <%= link_to teacher do%>
+                        <i class="glyphicon glyphicon-eye-open"></i>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

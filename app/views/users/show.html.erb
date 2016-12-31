@@ -1,0 +1,54 @@
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<% if current_user %>
+				<% if current_user.username == @user.username %>
+					<%= render "/user_debts", user: @user, debts_array: @debts_array %>
+				<% elsif current_user.has_role? :admin and @user.has_role? :student %>
+					<%= render "/user_debts", user: @user, debts_array: @debts_array %>
+				<% elsif current_user.has_role? :admin and @user.has_role? :teacher %>
+					<%= render "/user_debts", user: @user, debts_array: @debts_array %>
+				<% else %>
+					<h1>Este perfil no te pertenece, solo el dueño puede acceder a esta información</h1>
+				<% end %>
+			<% else %>
+				<h1>Este perfil no te pertenece, inicia sesión e intenta de nuevo</h1>
+			<% end %>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+
+
+	 $.datepicker.regional['es'] = {
+	 closeText: 'Cerrar',
+	 prevText: '< Ant',
+	 nextText: 'Sig >',
+	 currentText: 'Hoy',
+	 monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+	 monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+	 dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+	 dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+	 dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+	 weekHeader: 'Sm',
+	 dateFormat: 'dd/mm/yy',
+	 firstDay: 1,
+	 isRTL: false,
+	 showMonthAfterYear: false,
+	 yearSuffix: ''
+	 };
+	 $.datepicker.setDefaults($.datepicker.regional['es']);
+
+	$("#datepicker").datepicker( {
+	    changeMonth: true,
+	    changeYear: true,
+	    showButtonPanel: true,
+	    dateFormat: 'MM yy',
+	    onClose: function(dateText, inst) {
+	        var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+	        var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+	        $(this).datepicker('setDate', new Date(year, month, 1));
+	    }
+	});
+</script>
+
