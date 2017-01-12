@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+
 	def index
 		@students = User.with_role :student
 		@teachers = User.with_role :teacher
@@ -22,6 +23,9 @@ class UsersController < ApplicationController
 			@user.update(user_params)
 			redirect_to @user
 		end
+
+		#receipts creation code
+		@receipt = Receipt.new
 	end
 
 	private

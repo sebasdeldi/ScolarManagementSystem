@@ -1,0 +1,20 @@
+<%= form_for @receipt do |f| %>
+
+	<%= hidden_field_tag "user_id", user.id %>
+  	<div class="form-group">
+    	<%= f.text_field :date, class: "form-control", placeholder: "Fecha de la factura" %>
+  	</div>
+
+  	<div class="form-group">
+  		<%= f.file_field :receiptFile %>
+  	</div>
+
+  	<div class="actions text-right">
+    	<%= f.submit "Agregar", class: "btn btn-primary" %>
+  	</div>
+<% end %>
+<ol>
+  <% user.receipts.each do |receipt| %>
+    <li><%= link_to receipt.date, receipt.receiptFile.url%></li>
+  <% end %>
+</ol>

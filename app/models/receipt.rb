@@ -1,0 +1,4 @@
+class Receipt < ActiveRecord::Base
+	belongs_to :user
+	mount_uploader :receiptFile, ReceiptFileUploader
+end

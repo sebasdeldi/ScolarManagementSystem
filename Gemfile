@@ -50,4 +50,4 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'devise'
 gem "rolify"
 gem 'jquery-ui-rails'
-
+gem 'carrierwave', '~> 1.0'

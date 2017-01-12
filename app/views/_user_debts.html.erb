@@ -12,8 +12,45 @@
 <div class="tab-content ">
 	<div class="tab-pane active" id="1">
 		<h1><%= user.username %></h1>
+		<% if current_user == user or current_user.has_role? :admin %>
+			<ol>
+			  <% user.receipts.each do |receipt| %>
+			    <li><%= link_to receipt.date, receipt.receiptFile.url%></li>
+			  <% end %>
+			</ol>
+		<% end %>
 		<% if current_user.has_role? :admin %>
-			<h4>Logged as admin</h4>
+
+			<button type="button" class="btn btn-primary fixedbutton" data-toggle="modal" data-target="#receipt-modal">Agregar Factura</button>
+
+			<!-- Receipt Modal -->
+			<div class="modal fade" id="receipt-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="myModalLabel">Agregar Factura</h4>
+						</div>
+
+						<%= form_for @receipt do |f| %>
+							<div class="modal-body">
+									<%= hidden_field_tag "user_id", user.id %>
+								  	<div class="form-group">
+								    	<%= f.text_field :date, class: "form-control input-lg", placeholder: "Selecciona mes y año", id: "datepicker" %>
+								  	</div>
+
+								  	<div class="form-group">
+								  		<%= f.file_field :receiptFile %>
+								  	</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+								<%= f.submit "Agregar Factura", class: "btn btn-primary" %>
+							</div>
+						<% end %>
+					</div>
+				</div>
+			</div>
 		<% elsif current_user.has_role? :teacher %>
 			<h4>Logged as teacher</h4>
 		<% else %>
@@ -56,7 +93,7 @@
 		<% if current_user.has_role? :admin %>
 			<button type="button" class="btn btn-danger fixedbutton" data-toggle="modal" data-target="#debt-modal">Agregar Deuda</button>
 
-			<!-- Modal -->
+			<!-- Debt Modal -->
 			<div class="modal fade" id="debt-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
