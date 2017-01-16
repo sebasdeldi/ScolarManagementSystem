@@ -1,0 +1,92 @@
+<div class="col-sm-6">
+	<div class="info">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<span class="glyphicon glyphicon-user left-icon" aria-hidden="true"></span>
+				<h3 class="panel-title">Usuario</h3>
+			</div>
+			<div class="panel-body">
+				<%= user.username %>
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<span class="glyphicon glyphicon-user left-icon" aria-hidden="true"></span>
+				<h3 class="panel-title">Nombres</h3>
+			</div>
+			<div class="panel-body">
+				<%= user.names %>
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<span class="glyphicon glyphicon-user left-icon" aria-hidden="true"></span>
+				<h3 class="panel-title">Apellidos</h3>
+			</div>
+			<div class="panel-body">
+				<%= user.last_names %>
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<span class="glyphicon glyphicon-user left-icon" aria-hidden="true"></span>
+				<h3 class="panel-title">Acudiente</h3>
+			</div>
+			<div class="panel-body">
+				<%= user.guardian %>
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<span class="glyphicon glyphicon-earphone left-icon" aria-hidden="true"></span>
+				<h3 class="panel-title">Teléfono</h3>
+			</div>
+			<div class="panel-body">
+				<%= user.phone %>
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<span class="glyphicon glyphicon-credit-card left-icon" aria-hidden="true"></span>
+				<h3 class="panel-title">Identificación</h3>
+			</div>
+			<div class="panel-body">
+				<%= user.identification %>
+			</div>
+		</div>
+
+		<%= user.password %>
+	</div>
+</div>
+<div class="col-sm-6">
+	<div class="receipts-list">
+
+		<div class="alert alert-warning" role="alert">
+		<ul>
+			<li class="receipt-warning">Para solicitar alguna factura, por favor comunicarce con la administración de la institución.</li>
+			<br>
+			<li class="receipt-warning">Las facturas permanecerán en el sitio por 3 meses (90 días) contanto desde el día en que son subidas al sistema.</li>
+		</ul>
+		</div>
+		<% if user.receipts.empty? %>
+			<h2>No hay facturas.</h2>
+		<% else %>
+			<div class="list-group">
+				<a href="#" class="list-group-item active">
+					<span class="glyphicon glyphicon-list-alt left-icon" aria-hidden="true"></span>
+				  	Facturas
+				</a>
+				<% user.receipts.each do |receipt| %>
+				 	<%= link_to receipt.date, receipt.receiptFile.url, class: "list-group-item", target: "_blank" %>
+				<% end %>
+			</div>
+		<% end %>
+	</div>
+
+</div>
+

@@ -51,3 +51,4 @@ gem 'devise'
 gem "rolify"
 gem 'jquery-ui-rails'
 gem 'carrierwave', '~> 1.0'
+gem 'will_paginate-bootstrap'

@@ -33,4 +33,12 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable
+
+  def self.search_students(search)
+    where("names LIKE ? OR last_names LIKE ? OR identification LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%").where("role = ?", "student" )
+  end
+
+  def self.search_teachers(search)
+    where("names LIKE ? OR last_names LIKE ? OR identification LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%").where("role = ?", "teacher" )
+  end
 end

@@ -10,4 +10,17 @@ class ApplicationController < ActionController::Base
   		root_path
   	end
   end
+
+  # Code for deleteing PDF files (receipts) every 90 days
+  def auto_delete_receipts
+    #get user id from params or as a method parameter
+    user = params[:id]
+
+    user.receipts.each do |receipt|
+      #check if receipt is three months old
+        receipt.remove_receiptFile!
+        receipt.save
+      #end
+    end
+  end
 end

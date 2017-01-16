@@ -11,13 +11,8 @@
 
 <div class="tab-content ">
 	<div class="tab-pane active" id="1">
-		<h1><%= user.username %></h1>
 		<% if current_user == user or current_user.has_role? :admin %>
-			<ol>
-			  <% user.receipts.each do |receipt| %>
-			    <li><%= link_to receipt.date, receipt.receiptFile.url%></li>
-			  <% end %>
-			</ol>
+			<%= render '/user_profile', user: user %>
 		<% end %>
 		<% if current_user.has_role? :admin %>
 
@@ -51,10 +46,6 @@
 					</div>
 				</div>
 			</div>
-		<% elsif current_user.has_role? :teacher %>
-			<h4>Logged as teacher</h4>
-		<% else %>
-			<h4>Logged as student</h4>
 		<% end %>
 	</div>
 
