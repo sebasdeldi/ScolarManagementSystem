@@ -65,7 +65,8 @@
 		<%= user.password %>
 	</div>
 </div>
-<% if user.has_role? :student %>
+
+<% if user.has_role? :student and (current_user.has_role? :admin or current_user.username == user.username) %>
 	<div class="col-sm-6">
 		<div class="receipts-list">
 

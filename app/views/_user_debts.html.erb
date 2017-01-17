@@ -2,7 +2,7 @@
   <li class="active">
     <a href="#1" data-toggle="tab">Información</a>
   </li>
-  <% if user.has_role? :student%>
+  <% if user.has_role? :student and (current_user.has_role? :admin or current_user.username == user.username) %>
   	<li>
   		<a href="#2" data-toggle="tab">Deudas <span class="badge"><%= debts_array.nil? ? '0' : debts_array.count %></span></a>
   	</li>
