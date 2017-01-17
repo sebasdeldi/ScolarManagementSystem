@@ -2,11 +2,11 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<% if current_user %>
-				<% if current_user.username == @user.username %>
+				<% if (current_user.username == @user.username) and current_user.has_role? :teacher %>
+					<%= render "/user_debts", user: @user, debts_array: @debts_array, students: @students %>
+				<% elsif current_user.username == @user.username %>
 					<%= render "/user_debts", user: @user, debts_array: @debts_array %>
-				<% elsif current_user.has_role? :admin and @user.has_role? :student %>
-					<%= render "/user_debts", user: @user, debts_array: @debts_array %>
-				<% elsif current_user.has_role? :admin and @user.has_role? :teacher %>
+				<% elsif current_user.has_role? :admin and (@user.has_role? :teacher or @user.has_role? :student) %>
 					<%= render "/user_debts", user: @user, debts_array: @debts_array %>
 				<% else %>
 					<h1>Este perfil no te pertenece, solo el dueño puede acceder a esta información</h1>
@@ -15,8 +15,6 @@
 				<h1>Este perfil no te pertenece, inicia sesión e intenta de nuevo</h1>
 			<% end %>
 		</div>
-
-
 	</div>
 </div>
 <script type="text/javascript">
@@ -52,5 +50,30 @@
 	        $(this).datepicker('setDate', new Date(year, month, 1));
 	    }
 	});
+
+	$("#datepicker2").datepicker( {
+	    changeMonth: true,
+	    changeYear: true,
+	    showButtonPanel: true,
+	    dateFormat: 'MM yy',
+	    onClose: function(dateText, inst) {
+	        var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+	        var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+	        $(this).datepicker('setDate', new Date(year, month, 1));
+	    }
+	});
+
+	$("#datepicker3").datepicker( {
+	    changeMonth: true,
+	    changeYear: true,
+	    showButtonPanel: true,
+	    dateFormat: 'MM yy',
+	    onClose: function(dateText, inst) {
+	        var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+	        var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+	        $(this).datepicker('setDate', new Date(year, month, 1));
+	    }
+	});
+
 </script>
 

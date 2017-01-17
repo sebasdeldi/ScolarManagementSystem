@@ -11,8 +11,8 @@
 
 <div class="tab-content ">
 	<div class="tab-pane active" id="1">
-		<% if current_user == user or current_user.has_role? :admin %>
-			<%= render '/user_profile', user: user %>
+		<% if current_user == user or current_user.has_role? :admin or current_user.has_role? :teacher %>
+			<%= render '/user_profile', user: user, students: students %>
 		<% end %>
 		<% if current_user.has_role? :admin %>
 
@@ -96,9 +96,9 @@
 							<div class="modal-body">
 								<div class="form-group">
 									<% if user.debts.nil? %>
-										<%= f.text_field :debts, class: "form-control input-lg", placeholder: "Selecciona mes y año", id: "datepicker"%>
+										<%= f.text_field :debts, class: "form-control input-lg", placeholder: "Selecciona mes y año", id: "datepicker2"%>
 									<% else%>
-										<%= f.text_field :add_debt, class: "form-control input-lg", placeholder: "Selecciona mes y año", id: "datepicker"%>
+										<%= f.text_field :add_debt, class: "form-control input-lg", placeholder: "Selecciona mes y año", id: "datepicker3"%>
 									<% end %>
 								</div>
 							</div>

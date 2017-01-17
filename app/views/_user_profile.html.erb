@@ -30,15 +30,17 @@
 			</div>
 		</div>
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<span class="glyphicon glyphicon-user left-icon" aria-hidden="true"></span>
-				<h3 class="panel-title">Acudiente</h3>
+		<% if user.has_role? :student %>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<span class="glyphicon glyphicon-user left-icon" aria-hidden="true"></span>
+					<h3 class="panel-title">Acudiente</h3>
+				</div>
+				<div class="panel-body">
+					<%= user.guardian %>
+				</div>
 			</div>
-			<div class="panel-body">
-				<%= user.guardian %>
-			</div>
-		</div>
+		<% end %>
 
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -63,30 +65,53 @@
 		<%= user.password %>
 	</div>
 </div>
-<div class="col-sm-6">
-	<div class="receipts-list">
+<% if user.has_role? :student %>
+	<div class="col-sm-6">
+		<div class="receipts-list">
 
-		<div class="alert alert-warning" role="alert">
-		<ul>
-			<li class="receipt-warning">Para solicitar alguna factura, por favor comunicarce con la administración de la institución.</li>
-			<br>
-			<li class="receipt-warning">Las facturas permanecerán en el sitio por 3 meses (90 días) contanto desde el día en que son subidas al sistema.</li>
-		</ul>
+			<div class="alert alert-warning" role="alert">
+			<ul>
+				<li class="receipt-warning">Para solicitar alguna factura, por favor comunicarce con la administración de la institución.</li>
+				<br>
+				<li class="receipt-warning">Las facturas permanecerán en el sitio por 3 meses (90 días) contanto desde el día en que son subidas al sistema.</li>
+			</ul>
+			</div>
+			<% if user.receipts.empty? %>
+				<h2>No hay facturas.</h2>
+			<% else %>
+				<div class="list-group">
+					<a href="#" class="list-group-item active">
+						<span class="glyphicon glyphicon-list-alt left-icon" aria-hidden="true"></span>
+					  	Facturas
+					</a>
+					<% user.receipts.each do |receipt| %>
+					 	<%= link_to receipt.date, receipt.receiptFile.url, class: "list-group-item", target: "_blank" %>
+					<% end %>
+				</div>
+			<% end %>
 		</div>
-		<% if user.receipts.empty? %>
-			<h2>No hay facturas.</h2>
-		<% else %>
+
+	</div>
+<% elsif user.has_role? :teacher %>
+
+	<div class="col-sm-6">
+		<div class="students-list">
+
+			<div class="input-group">
+			    <input type="text" class="form-control" placeholder="Buscar estudiantes por nombre o apellido.">
+			    <span class="input-group-btn">
+			    	<button class="btn btn-primary" type="button">Buscar</button>
+			    </span>
+			</div>
+
+			<br>
+
 			<div class="list-group">
-				<a href="#" class="list-group-item active">
-					<span class="glyphicon glyphicon-list-alt left-icon" aria-hidden="true"></span>
-				  	Facturas
-				</a>
-				<% user.receipts.each do |receipt| %>
-				 	<%= link_to receipt.date, receipt.receiptFile.url, class: "list-group-item", target: "_blank" %>
+				<% students.each do |student| %>
+					<%= link_to student.names + " " + student.last_names, student, class: "list-group-item" %>
 				<% end %>
 			</div>
-		<% end %>
+		</div>
 	</div>
-
-</div>
+<% end %>
 

@@ -11,6 +11,7 @@ class UsersController < ApplicationController
 	end
 
 	def show
+		@students = User.with_role(:student)
 		@user = User.find(params[:id])
 		if !@user.debts.nil?
 			debts_str = @user.debts
