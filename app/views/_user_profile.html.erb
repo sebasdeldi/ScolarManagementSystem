@@ -93,18 +93,20 @@
 		</div>
 
 	</div>
-<% elsif user.has_role? :teacher %>
+<% elsif current_user.has_role? :teacher and current_user.username == user.username %>
 
 	<div class="col-sm-6">
 		<div class="students-list">
 
-			<div class="input-group">
-			    <input type="text" class="form-control" placeholder="Buscar estudiantes por nombre o apellido.">
-			    <span class="input-group-btn">
-			    	<button class="btn btn-primary" type="button">Buscar</button>
-			    </span>
-			</div>
+			<%= form_tag(user_path, :method => "get", id: "navBarSearchForm", role: "search") do %>
+				<div class="input-group">
+					<%= text_field_tag :search, params[:search], placeholder: "Buscar estudiantes por nombre o apellido.", class: "form-control" %>
+					<span class="input-group-btn">
+						<%= submit_tag "Buscar", class: "btn btn-primary", type: "button" %>
+					</span>
+				</div>
 
+			<% end %>
 			<br>
 
 			<div class="list-group">
@@ -114,5 +116,9 @@
 			</div>
 		</div>
 	</div>
+<% end %>
+
+<% if params[:search] %>
+	<%= link_to "Reinicar busqueda", user_path, class: "btn btn-primary fixedbutton" %>
 <% end %>
 

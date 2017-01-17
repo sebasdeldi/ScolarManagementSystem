@@ -2,11 +2,9 @@
   <div class="container-fluid">
 
     <div class="navbar-header">
-      <!-- TODO change link to root path. -->
       <%= link_to "Frida Kahlo", root_path, class: "navbar-brand" %>
     </div>
 
-    <!-- TODO implement searching bar -->
     <% if current_user %>
       <% if current_user.has_role? :admin %>
         <%= form_tag(root_path, :method => "get", id: "navBarSearchForm", class: "navbar-form navbar-left", role: "search") do %>

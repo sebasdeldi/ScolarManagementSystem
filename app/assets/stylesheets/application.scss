@@ -17,6 +17,17 @@
     margin-bottom: 25px;
 }
 
+.students-list{
+    max-height: 605px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+
+.students-list:hover{
+    overflow-y: auto;
+}
+
 .receipt-warnig{
     text-align: justify;
 }

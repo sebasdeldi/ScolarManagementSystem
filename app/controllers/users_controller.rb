@@ -2,11 +2,11 @@ class UsersController < ApplicationController
 
 	def index
 		if params[:search]
-			@students = User.search_students(params[:search]).order("created_at DESC").paginate(:page => params[:page], :per_page => 20)
-			@teachers = User.search_teachers(params[:search]).order("created_at DESC").paginate(:page => params[:page], :per_page => 20)
+			@students = User.search_students(params[:search]).order("created_at DESC").paginate(:page => params[:page], :per_page => 15)
+			@teachers = User.search_teachers(params[:search]).order("created_at DESC").paginate(:page => params[:page], :per_page => 15)
 		else
-			@students = User.with_role(:student).paginate(:page => params[:page], :per_page => 20)
-			@teachers = User.with_role(:teacher).paginate(:page => params[:page], :per_page => 20)
+			@students = User.with_role(:student).paginate(:page => params[:page], :per_page => 15)
+			@teachers = User.with_role(:teacher).paginate(:page => params[:page], :per_page => 15)
 		end
 	end
 
@@ -28,6 +28,10 @@ class UsersController < ApplicationController
 		if request.patch?
 			@user.update(user_params)
 			redirect_to @user
+		end
+
+		if params[:search]
+			@students = User.search_students(params[:search]).order("created_at DESC")
 		end
 
 		#receipts creation code
