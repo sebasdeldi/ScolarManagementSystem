@@ -11,6 +11,7 @@ class UsersController < ApplicationController
 	end
 
 	def show
+		@notes = Note.all
 		@students = User.with_role(:student)
 		@user = User.find(params[:id])
 		if !@user.debts.nil?
@@ -36,6 +37,9 @@ class UsersController < ApplicationController
 
 		#receipts creation code
 		@receipt = Receipt.new
+
+		#note creation code
+		@note = Note.new
 	end
 
 	private

@@ -3,13 +3,13 @@
 		<div class="col-sm-12">
 			<% if current_user %>
 				<% if (current_user.username == @user.username) and current_user.has_role? :teacher %>
-					<%= render "/user_debts", user: @user, debts_array: @debts_array, students: @students %>
+					<%= render "/user_debts", user: @user, debts_array: @debts_array, students: @students, note: @note, notes: @notes %>
 				<% elsif current_user.username == @user.username %>
-					<%= render "/user_debts", user: @user, debts_array: @debts_array, students: @students %>
+					<%= render "/user_debts", user: @user, debts_array: @debts_array, students: @students, note: @note, notes: @notes %>
 				<% elsif current_user.has_role? :admin and (@user.has_role? :teacher or @user.has_role? :student) %>
-					<%= render "/user_debts", user: @user, debts_array: @debts_array , students: @students%>
+					<%= render "/user_debts", user: @user, debts_array: @debts_array , students: @students, note: @note , notes: @notes%>
 				<% elsif current_user.has_role? :teacher and @user.has_role? :student %>
-					<%= render "/user_debts", user: @user, debts_array: @debts_array , students: @students%>
+					<%= render "/user_debts", user: @user, debts_array: @debts_array , students: @students, note: @note , notes: @notes%>
 				<% else %>
 					<h1>Este perfil no te pertenece, solo el dueño puede acceder a esta información</h1>
 				<% end %>

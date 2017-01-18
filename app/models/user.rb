@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   after_create :assign_role
   serialize :debts
   has_many :receipts
+  has_many :notes
 
   def assign_role
   	if self.username == "admin"

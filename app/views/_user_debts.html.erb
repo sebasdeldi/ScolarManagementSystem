@@ -7,12 +7,17 @@
   		<a href="#2" data-toggle="tab">Deudas <span class="badge"><%= debts_array.nil? ? '0' : debts_array.count %></span></a>
   	</li>
   <% end %>
+	<% if user.has_role? :student%>
+		<li>
+			<a href="#3" data-toggle="tab">Notas <span class="badge"><%= notes.where(student_id: user.id).count %></span></a>
+		</li>
+	<% end %>
 </ul>
 
 <div class="tab-content ">
 	<div class="tab-pane active" id="1">
 		<% if current_user == user or current_user.has_role? :admin or current_user.has_role? :teacher %>
-			<%= render '/user_profile', user: user, students: students %>
+			<%= render '/user_profile', user: user, students: students, note: note %>
 		<% end %>
 		<% if current_user.has_role? :admin %>
 
@@ -24,7 +29,7 @@
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title" id="myModalLabel">Agregar Factura</h4>
+							<h4 class="modal-title" id="myModalLabel">Agregar factura a <%=user.names%> <%= user.last_names%></h4>
 						</div>
 
 						<%= form_for @receipt do |f| %>
@@ -52,6 +57,7 @@
 	<div class="tab-pane" id="2">
 		<% if debts_array.nil? %>
 			<h1>No hay deudas.</h1>
+			<div class="panel panel-default"></div>
 		<% else %>
 			<table class="table table-hover">
 				<thead>
@@ -90,7 +96,7 @@
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title" id="myModalLabel">Agregar Deuda</h4>
+							<h4 class="modal-title" id="myModalLabel">Agregar deuda a <%=user.names%> <%= user.last_names%></h4>
 						</div>
 						<%= form_for user do |f| %>
 							<div class="modal-body">
@@ -111,6 +117,74 @@
 				</div>
 			</div>
 		<% end %>
+	</div>
+
+	<div class="tab-pane" id="3">
+
+		<% if notes.where(student_id: user.id).empty? and (current_user.has_role? :student or current_user.has_role? :admin) %>
+			<h1>No hay notas.</h1>
+		<% end %>
+
+		<% if notes.where(student_id: user.id).where(teacher_id: current_user.id).empty? and current_user.has_role? :teacher %>
+			<h1>No hay notas creadas por tí.</h1>
+		<% end %>
+		<br>
+		<% notes.where(student_id: user.id).each do |note| %>
+			<div class="panel panel-default">
+				<% if note.teacher_id == current_user.id or current_user.has_role? :admin %>
+					<!-- Default panel contents -->
+					<div class="panel-heading"><b>Asignatura: </b><%= note.subject %></div>
+					<div class="panel-body">
+						<p><%= note.description%></p>
+					</div>
+
+					<!-- List group -->
+					<ul class="list-group">
+						<li class="list-group-item"><b>Calificación: </b><%= note.grade %></li>
+						<li class="list-group-item"><b>Profesor: </b><%= User.find(note.teacher_id.to_i).names %> <%= User.find(note.teacher_id.to_i).last_names  %></li>
+					</ul>
+				<% end %>
+			</div>
+		<% end %>
+
+		<% if current_user.has_role? :teacher and user.has_role? :student %>
+			<button type="button" class="btn btn-primary fixedbutton" data-toggle="modal" data-target="#note-modal">Agregar Nota</button>
+
+
+			<!-- Note Modal -->
+			<div class="modal fade" id="note-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="myModalLabel">Agregar nota a <%=user.names%> <%= user.last_names%></h4>
+						</div>
+						<%= form_for note do |f| %>
+							<div class="modal-body">
+								<div class="form-group">
+									<%= hidden_field_tag "student_id", user.id %>
+									<%= hidden_field_tag "teacher_id", current_user.id %>
+
+									<%= f.text_field :grade, class: "form-control input-lg", placeholder: "Calificación" %>
+									<br>
+
+									<%= f.text_area :description, class: "form-control input-lg", placeholder: "Descripción de la nota." %>
+									<br>
+									<%= f.text_field :subject, class: "form-control input-lg", placeholder: "Asignatura a la que pertenece la nota." %>
+
+
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+								<%= f.submit "Agregar Nota", class: "btn btn-primary" %>
+							</div>
+						<% end %>
+					</div>
+				</div>
+			</div>
+		<% end %>
+
 	</div>
 </div>
 <script type="text/javascript">
