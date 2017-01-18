@@ -129,19 +129,23 @@
 			<h1>No hay notas creadas por tí.</h1>
 		<% end %>
 		<br>
-		<% notes.where(student_id: user.id).each do |note| %>
+		<%= select_tag :subject_search, grouped_options_for_select("Preescolar" => ["Lenguaje y comunicación.", "Inglés (Preescolar).", "Pensamiento matemático.", "Exploración y conocimiento del mundo.", "Desarrollo físico y salud.", "Desarrollo personal y social.", "Expresión y apreciación artística."], "Primaria" => ["Español (Primaria).", "Inglés (Primaria).", "Matemáticas (Primaria).", "Ciencias naturales.", "Geografía (Primaria).", "Historia.(Primaria)", "Formación cívica y ética.", "Educación física.", "Educación artística."], "Secundaria" => ["Español (Secundaria)", "Inglés (Secundaria)", "Matemáticas (Secundaria)", "Biología", "Física", "Química", "Tecnología", "Geografía (Secundaria)", "Historia (Secundaria)", "Educación física (Secundaria)", "Arte"]) , { class: "selectpicker", title: "Buscar nota por asignatura."}  %>
+		<br>
+		<br>
+		<% notes.where(student_id: user.id).reverse.each do |note| %>
 			<div class="panel panel-default">
 				<% if note.teacher_id == current_user.id or current_user.has_role? :admin %>
 					<!-- Default panel contents -->
 					<div class="panel-heading"><b>Asignatura: </b><%= note.subject %></div>
 					<div class="panel-body">
-						<p><%= note.description%></p>
+						<p><b>Descripción: </b><%= note.description%></p>
 					</div>
 
 					<!-- List group -->
 					<ul class="list-group">
 						<li class="list-group-item"><b>Calificación: </b><%= note.grade %></li>
 						<li class="list-group-item"><b>Profesor: </b><%= User.find(note.teacher_id.to_i).names %> <%= User.find(note.teacher_id.to_i).last_names  %></li>
+						<li class="list-group-item"><b>Fecha: </b><%= note.created_at  %></li>
 					</ul>
 				<% end %>
 			</div>
@@ -165,13 +169,13 @@
 									<%= hidden_field_tag "student_id", user.id %>
 									<%= hidden_field_tag "teacher_id", current_user.id %>
 
-									<%= f.text_field :grade, class: "form-control input-lg", placeholder: "Calificación" %>
+									<%= f.text_field :grade, class: "form-control input-lg", placeholder: "Calificación." %>
 									<br>
 
 									<%= f.text_area :description, class: "form-control input-lg", placeholder: "Descripción de la nota." %>
 									<br>
-									<%= f.text_field :subject, class: "form-control input-lg", placeholder: "Asignatura a la que pertenece la nota." %>
 
+									<%= f.select :subject, grouped_options_for_select("Preescolar" => ["Lenguaje y comunicación.", "Inglés (Preescolar).", "Pensamiento matemático.", "Exploración y conocimiento del mundo.", "Desarrollo físico y salud.", "Desarrollo personal y social.", "Expresión y apreciación artística."], "Primaria" => ["Español (Primaria).", "Inglés (Primaria).", "Matemáticas (Primaria).", "Ciencias naturales.", "Geografía (Primaria).", "Historia.(Primaria)", "Formación cívica y ética.", "Educación física.", "Educación artística."], "Secundaria" => ["Español (Secundaria)", "Inglés (Secundaria)", "Matemáticas (Secundaria)", "Biología", "Física", "Química", "Tecnología", "Geografía (Secundaria)", "Historia (Secundaria)", "Educación física (Secundaria)", "Arte"]) , {}, { class: "selectpicker", title: "Asignatura a la que pertenece la nota."}  %>
 
 								</div>
 							</div>
@@ -188,6 +192,10 @@
 	</div>
 </div>
 <script type="text/javascript">
+
+	$(".selectpicker").attr("data-width", "100%");
+	$(".selectpicker").attr("data-live-search", "true");
+
 	// Since confModal is essentially a nested modal it's enforceFocus method
 	// must be no-op'd or the following error results
 	// "Uncaught RangeError: Maximum call stack size exceeded"
@@ -201,4 +209,5 @@
 	});
 
 	$confModal.modal({ backdrop : false });
+
 </script>
