@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs user-tabs">
   <li class="active">
     <a href="#1" data-toggle="tab">Información</a>
   </li>
@@ -192,12 +192,17 @@
 		<% end %>
 
 		<% if params[:subject_search]%>
-			<%= link_to "Reinicar busqueda", user_path, class: "btn btn-primary fixedbutton" %>
+			<%= link_to "Reinicar busqueda", :back , class: "btn btn-primary fixedbutton" %>
 		<% end %>
 
 	</div>
 </div>
 <script type="text/javascript">
+
+	//script for automatically going to the notes tab when a subject search is done
+	if (window.location.search.indexOf('subject_search') > -1) {
+	  $('.user-tabs a[href="#3"]').tab('show');
+	}
 
 	$(".selectpicker").attr("data-width", "100%");
 	$(".selectpicker").attr("data-live-search", "true");
