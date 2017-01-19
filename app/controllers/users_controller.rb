@@ -35,6 +35,10 @@ class UsersController < ApplicationController
 			@students = User.search_students(params[:search]).order("created_at DESC")
 		end
 
+		if params[:subject_search]
+			@notes = Note.search_note_by_subject(params[:subject_search]).order("created_at DESC")
+		end
+
 		#receipts creation code
 		@receipt = Receipt.new
 
