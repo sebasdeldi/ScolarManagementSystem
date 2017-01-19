@@ -133,7 +133,6 @@
 			<%= select_tag :subject_search, grouped_options_for_select("Preescolar" => ["Lenguaje y comunicación.", "Inglés (Preescolar).", "Pensamiento matemático.", "Exploración y conocimiento del mundo.", "Desarrollo físico y salud.", "Desarrollo personal y social.", "Expresión y apreciación artística."], "Primaria" => ["Español (Primaria).", "Inglés (Primaria).", "Matemáticas (Primaria).", "Ciencias naturales.", "Geografía (Primaria).", "Historia.(Primaria)", "Formación cívica y ética.", "Educación física.", "Educación artística."], "Secundaria" => ["Español (Secundaria)", "Inglés (Secundaria)", "Matemáticas (Secundaria)", "Biología", "Física", "Química", "Tecnología", "Geografía (Secundaria)", "Historia (Secundaria)", "Educación física (Secundaria)", "Arte"]) , { class: "selectpicker", title: "Buscar nota por asignatura.", id: "subject-search" , :onchange => "this.form.submit()"}  %>
 		<% end %>
 		<br>
-		<br>
 		<% notes.where(student_id: user.id).reverse.each do |note| %>
 			<div class="panel panel-default">
 				<% if note.teacher_id == current_user.id or current_user.has_role? :admin or  note.student_id == current_user.id %>
@@ -192,12 +191,21 @@
 		<% end %>
 
 		<% if params[:subject_search]%>
-			<%= link_to "Reinicar busqueda", :back , class: "btn btn-primary fixedbutton" %>
+			<%= form_tag(user_path, :method => "get", id: "subject-search", role: "search") do %>
+				<%= hidden_field_tag "reset_subjects_search", true %>
+				<%= submit_tag "Reinicar busqueda" , class: "btn btn-primary fixedbutton" %>
+			<% end %>
 		<% end %>
 
 	</div>
 </div>
 <script type="text/javascript">
+
+	window.onunload = unloadPage;
+	function unloadPage()
+	{
+	    alert("unload event detected!");
+	}
 
 	//script for automatically going to the notes tab when a subject search is done
 	if (window.location.search.indexOf('subject_search') > -1) {

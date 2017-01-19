@@ -39,6 +39,10 @@ class UsersController < ApplicationController
 			@notes = Note.search_note_by_subject(params[:subject_search]).order("created_at DESC")
 		end
 
+		if params[:reset_subjects_search]
+			@notes = Note.all
+		end
+
 		#receipts creation code
 		@receipt = Receipt.new
 

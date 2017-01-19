@@ -5,4 +5,5 @@ class Note < ActiveRecord::Base
 	def self.search_note_by_subject(search)
 	  where("subject LIKE ?", "%#{search}%")
 	end
+
 end
