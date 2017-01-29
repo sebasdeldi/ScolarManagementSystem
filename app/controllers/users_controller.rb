@@ -11,32 +11,17 @@ class UsersController < ApplicationController
 	end
 
 	def show
-		@notes = Note.all
+		@notes = Note.all.paginate(:page => params[:page], :per_page => 15)
 		@students = User.with_role(:student)
 		@user = User.find(params[:id])
-		if !@user.debts.nil?
-			debts_str = @user.debts
-			@debts_array = debts_str.split(/(?<=[0-9][0-9][0-9][0-9])/)
-			if params[:delete].present?
-				toDelete = params[:delete]
-				@debts_array.delete_if {|x| x == toDelete }
-				debts_str = @debts_array.join
-				@user.debts = debts_str
-				@user.save
-				redirect_to @user
-			end
-		end
-		if request.patch?
-			@user.update(user_params)
-			redirect_to @user
-		end
+
 
 		if params[:search]
-			@students = User.search_students(params[:search]).order("created_at DESC")
+			@students = User.search_students(params[:search]).order("created_at DESC").paginate(:page => params[:page], :per_page => 15)
 		end
 
 		if params[:subject_search]
-			@notes = Note.search_note_by_subject(params[:subject_search]).order("created_at DESC")
+			@notes = Note.search_note_by_subject(params[:subject_search]).order("created_at DESC").paginate(:page => params[:page], :per_page => 15)
 		end
 
 		if params[:reset_subjects_search]
@@ -48,9 +33,29 @@ class UsersController < ApplicationController
 
 		#note creation code
 		@note = Note.new
+
+		#debt creation code
+		@debt = Debt.new
+	end
+
+	def edit
+		@user = User.find(params[:id])
+	end
+
+	def update
+		user = User.find(params[:id])
+		if user.update!(user_update_params)
+			redirect_to user
+		else
+			redirect_to root_path
+		end
 	end
 
 	private
+		def user_update_params
+			params.require(:user).permit(:username, :names, :last_names, :guardian, :phone, :identification, :role, :password, :password_confirmation)
+		end
+
 		def user_params
 			if @user.debts.nil?
 				params.require(:user).permit(:debts)

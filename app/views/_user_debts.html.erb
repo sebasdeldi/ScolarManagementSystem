@@ -4,7 +4,7 @@
   </li>
   <% if user.has_role? :student and (current_user.has_role? :admin or current_user.username == user.username) %>
   	<li>
-  		<a href="#2" data-toggle="tab">Deudas <span class="badge"><%= debts_array.nil? ? '0' : debts_array.count %></span></a>
+  		<a href="#2" data-toggle="tab">Deudas <span class="badge"><%= user.debts.count %></span></a>
   	</li>
   <% end %>
 	<% if user.has_role? :student%>
@@ -55,7 +55,7 @@
 	</div>
 
 	<div class="tab-pane" id="2">
-		<% if debts_array.nil? %>
+		<% if user.debts.nil? %>
 			<h1>No hay deudas.</h1>
 			<div class="panel panel-default"></div>
 		<% else %>
@@ -63,19 +63,21 @@
 				<thead>
 					<tr>
 						<th>Fecha de la deuda</th>
+						<th>Descripción</th>
 						<% if current_user.has_role? :admin %>
 							<th>Eliminar deuda</th>
 						<% end %>
 					</tr>
 				</thead>
 			    <tbody>
-			    	<% debts_array.each do |debt| %>
+			    	<% user.debts.each do |debt| %>
 				        <tr>
-				          <td><%= debt %></td>
+				          <td><%= debt.date %></td>
+				          <td><%= debt.description%></td>
 				          <% if current_user.has_role? :admin %>
 				          	<td>
-				          		<%= form_tag( user, :method => "post", authenticity_token: false) do %>
-				          			<%= hidden_field_tag 'delete', debt %>
+				          		<%= form_tag( debt, :method => "delete", authenticity_token: false) do %>
+				          			<%= hidden_field_tag 'debt_id', debt.id %>
 				          			<%= button_tag :submit, class: "delete-cross" do %>
 				          			    <i class="glyphicon glyphicon-remove red"></i>
 				          			<% end %>
@@ -98,14 +100,13 @@
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							<h4 class="modal-title" id="myModalLabel">Agregar deuda a <%=user.names%> <%= user.last_names%></h4>
 						</div>
-						<%= form_for user do |f| %>
+						<%= form_for debt do |f| %>
 							<div class="modal-body">
 								<div class="form-group">
-									<% if user.debts.nil? %>
-										<%= f.text_field :debts, class: "form-control input-lg", placeholder: "Selecciona mes y año", id: "datepicker2"%>
-									<% else%>
-										<%= f.text_field :add_debt, class: "form-control input-lg", placeholder: "Selecciona mes y año", id: "datepicker3"%>
-									<% end %>
+									<%= hidden_field_tag "user_id", user.id %>
+									<%= f.text_field :date, class: "form-control input-lg", placeholder: "Selecciona mes y año.", id: "datepicker3"%>
+									<br>
+									<%= f.text_area :description, class: "form-control input-lg", placeholder: "Motivo de la deuda." %>
 								</div>
 							</div>
 							<div class="modal-footer">
@@ -185,10 +186,12 @@
 								<%= f.submit "Agregar Nota", class: "btn btn-primary" %>
 							</div>
 						<% end %>
+						<%= will_paginate notes, renderer: BootstrapPagination::Rails, previous_label: "Anterior", next_label: "Siguiente", outer_window: 0  %>
 					</div>
 				</div>
 			</div>
 		<% end %>
+
 
 		<% if params[:subject_search]%>
 			<%= form_tag(user_path, :method => "get", id: "subject-search", role: "search") do %>

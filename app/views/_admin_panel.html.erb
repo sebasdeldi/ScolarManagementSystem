@@ -32,7 +32,11 @@
                     <td><%= student.identification %></td>
                     <td>
                       <%= link_to student do%>
-                        <i class="glyphicon glyphicon-eye-open"></i>
+                        <i class="glyphicon glyphicon-eye-open separated-icon" title="Visitar perfil."></i>
+                      <% end %>
+
+                      <%= link_to edit_user_path(student) do%>
+                        <i class="glyphicon glyphicon-cog separated-icon" title="Editar perfil."></i>
                       <% end %>
                     </td>
                   </tr>
@@ -63,7 +67,11 @@
                     <td><%= teacher.identification %></td>
                     <td>
                       <%= link_to teacher do%>
-                        <i class="glyphicon glyphicon-eye-open"></i>
+                        <i class="glyphicon glyphicon-eye-open separated-icon" title="Visitar perfil."></i>
+                      <% end %>
+
+                      <%= link_to edit_user_path(teacher) do%>
+                        <i class="glyphicon glyphicon-cog separated-icon" title="Editar perfil."></i>
                       <% end %>
                     </td>
                   </tr>
@@ -82,3 +90,8 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  $(function () {
+    $('.separated-icon').tooltip()
+  })
+</script>

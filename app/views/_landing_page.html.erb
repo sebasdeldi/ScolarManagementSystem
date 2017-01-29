@@ -1,8 +1,9 @@
-<h1>Landing page</h1>
-<% if current_user %>
-	<%= link_to user_path(current_user) do %>
-	  <button type="button" class="btn btn-primary fixedbutton">Ir a mi perfil</button>
+<div class="landing">
+	<h1>Landing page</h1>
+	<% if current_user %>
+		<%= link_to user_path(current_user) do %>
+		  <button type="button" class="btn btn-primary fixedbutton">Ir a mi perfil</button>
+		<% end %>
 	<% end %>
-<% end %>
 
-
+</div>

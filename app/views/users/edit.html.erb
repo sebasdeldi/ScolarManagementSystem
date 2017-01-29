@@ -1,0 +1,125 @@
+<% if current_user && current_user.has_role?(:admin) %>
+
+  <div class="container form-bg">
+        <div class="row main">
+          <div class="panel-heading">
+                   <div class="panel-title text-center">
+                        <h1 class="title">Editar usuario</h1>
+                      <hr />
+                    </div>
+                </div>
+          <div class="main-login main-center">
+
+            <%= form_for @user do |f| %>
+
+              <div class="form-group">
+                <%= f.label :username, "Usuario" ,class: "cols-sm-2 control-label" %><br />
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                    <%= f.text_field :username, autofocus: true, class: "form-control" %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :names, "Nombres" ,class: "cols-sm-2 control-label" %><br />
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                    <%= f.text_field :names, autofocus: true, class: "form-control" %>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="form-group">
+                <%= f.label :last_names, "Apellidos" ,class: "cols-sm-2 control-label" %><br />
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                    <%= f.text_field :last_names, autofocus: true, class: "form-control" %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :phone, "Teléfono" ,class: "cols-sm-2 control-label" %><br />
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>
+                    <%= f.text_field :phone, autofocus: true, class: "form-control" %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :identification, "Número de identification" ,class: "cols-sm-2 control-label" %><br />
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                    <%= f.text_field :identification, autofocus: true, class: "form-control" %>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="form-group">
+                <%= f.label :guardian, "Guardian legal" ,class: "cols-sm-2 control-label" %><br />
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                    <%= f.text_field :guardian, autofocus: true, class: "form-control" %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group ">
+                <label>
+                  <%= f.radio_button :role, "student" , :checked => true %>
+                  Estudiante
+                </label>
+                <label>
+                  <%= f.radio_button :role, "teacher" %>
+                  Profesor
+                </label>
+              </div>
+
+
+
+              <div class="form-group">
+                <%= f.label :password, "Contraseña" ,class: "cols-sm-2 control-label" %><br />
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+                    <% if @minimum_password_length %>
+                      <em>(<%= @minimum_password_length %> characters minimum)</em>
+                    <% end %>
+                    <%= f.password_field :password, autofocus: true, class: "form-control", autocomplete: "off" %>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="form-group">
+                <%= f.label :password_confirmation, "Confirmar contraseña" ,class: "cols-sm-2 control-label" %><br />
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+                    <%= f.password_field :password_confirmation, autofocus: true, class: "form-control", autocomplete: "off" %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group ">
+                <%= f.submit "Editar", class: "btn btn-primary btn-lg btn-block login-button" %>
+              </div>
+
+            <% end %>
+          </div>
+        </div>
+        <p class="invisible">asdsadsadsdsadsad</p>
+      </div>
+<% else %>
+  <h1>Acceso exclusivo para administradores</h1>
+<% end %>

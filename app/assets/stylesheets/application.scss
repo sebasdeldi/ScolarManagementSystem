@@ -1,6 +1,18 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import 'jquery-ui/datepicker.css';
+$dark-blue: #152977;
+
+
+.navbar-right{
+    list-style: none;
+}
+
+.separated-icon{
+    margin-right: 20px;
+    text-align: center;
+}
+
 
 .left-icon{
     float: left;
@@ -63,45 +75,46 @@
 }​
 
 .no-space{
-	margin: 0 !important;
-	padding: 0 !important;
-	line-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 0 !important;
 }
 
-.navbar-nav > li > a {
+.navbar-nav .custom > li > a {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
+    margin-top: 15px;
 }
 
 
 .form-bg{
-	background-color: #d3d3d3;
-	height: 100%;
-	width: 100%;
- 	background-repeat: no-repeat;
- 	margin: 0 !important;
+    background-color: #d3d3d3;
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    margin: 0 !important;
 }
 
 .main{
- 	margin-top: 30px;
+    margin-top: 30px;
 }
 
 h1.title {
-	font-size: 50px;
-	font-weight: 400;
+    font-size: 50px;
+    font-weight: 400;
 }
 
 hr{
-	width: 35%;
-	color: #fff;
+    width: 35%;
+    color: #fff;
 }
 
 .form-group{
-	margin-bottom: 15px;
+    margin-bottom: 15px;
 }
 
 label{
-	margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 input, input::-webkit-input-placeholder {
@@ -110,7 +123,7 @@ input, input::-webkit-input-placeholder {
 }
 
 .main-login{
- 	background-color: #fff;
+    background-color: #fff;
     /* shadows and rounded borders */
     -moz-border-radius: 2px;
     -webkit-border-radius: 2px;
@@ -122,26 +135,29 @@ input, input::-webkit-input-placeholder {
 }
 
 .main-center{
- 	margin-top: 30px;
- 	margin: 0 auto;
- 	max-width: 630px;
+    margin-top: 30px;
+    margin: 0 auto;
+    max-width: 630px;
     padding: 40px 40px;
 
 }
 
 .login-button{
-	margin-top: 5px;
+    margin-top: 5px;
 }
 
 .login-register{
-	font-size: 11px;
-	text-align: center;
+    font-size: 11px;
+    text-align: center;
 }
 
 
 .custom-container{
-	margin: 25px;
+    margin: 25px;
 }
+
+
+
 
 #navBarSearchForm input[type=text]{width:430px !important;}
 

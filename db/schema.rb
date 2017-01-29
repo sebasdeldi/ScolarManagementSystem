@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170117223943) do
+ActiveRecord::Schema.define(version: 20170129174448) do
+
+  create_table "debts", force: :cascade do |t|
+    t.string   "date"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "user_id"
+  end
+
+  add_index "debts", ["user_id"], name: "index_debts_on_user_id"
 
   create_table "notes", force: :cascade do |t|
     t.datetime "created_at",  null: false
@@ -63,7 +73,6 @@ ActiveRecord::Schema.define(version: 20170117223943) do
     t.string   "phone"
     t.string   "identification"
     t.string   "role"
-    t.string   "debts"
   end
 
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

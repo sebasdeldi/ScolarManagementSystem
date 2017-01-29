@@ -1,0 +1,46 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+
+    <div class="navbar-header">
+      <%= link_to "Frida Kahlo", root_path, class: "navbar-brand" %>
+    </div>
+
+    <% if current_user %>
+      <% if current_user.has_role? :admin %>
+        <%= form_tag(root_path, :method => "get", id: "navBarSearchForm", class: "navbar-form navbar-left", role: "search") do %>
+          <div class="form-group">
+            <%= text_field_tag :search, params[:search], placeholder: "Buscar usuarios por nombre, apellido o identificación", class: "form-control" %>
+          </div>
+          <%= submit_tag "Buscar", class: "btn btn-default" %>
+        <% end %>
+
+
+        <ul class=" navbar-nav navbar-right">
+          <li>
+            <%= link_to new_user_registration_path, class: "no-space" do %>
+              <button type="button" class="btn btn-default navbar-btn">Agregar Usuario</button>
+            <% end %>
+          </li>
+          <li><p class="invisible">aaaaaa    </p></li>
+        </ul>
+      <% end %>
+    <% end %>
+
+    <ul class=" navbar-nav navbar-right">
+      <% if !current_user%>
+        <li>
+          <%= link_to new_user_session_path, class: "no-space" do %>
+            <button type="button" class="btn btn-default navbar-btn">Iniciar Sesión</button>
+          <% end %>
+        </li>
+      <% else %>
+        <li>
+          <%= link_to destroy_user_session_path, class: "no-space", method: :delete do %>
+            <button type="button" class="btn btn-default navbar-btn">Cerrar Sesión</button>
+          <% end %>
+        </li>
+      <% end %>
+    <li><p class="invisible">aaaaaa   </p></li>
+    </ul>
+  </div>
+</nav>

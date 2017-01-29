@@ -1,12 +1,20 @@
 Rails.application.routes.draw do
 
+  get 'debts/new'
+
+  get 'debts/create'
+
+  get 'debts/delete'
+
   devise_for :users, controllers: { registrations: 'users/registrations' }
   root "users#index"
-  post "users/:id" => "users#show"
-  get "users/:id" => "users#show", as: :user
-  patch "users/:id" => "users#show"
+
   resources :receipts
   resources :notes
+  resources :debts
+  resources :users
+
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
