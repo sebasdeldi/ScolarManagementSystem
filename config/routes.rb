@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  get 'mailshot/new'
+
+  get 'mailshot/create'
+
+  get 'mailshot/destroy'
+
   get 'debts/new'
 
   get 'debts/create'

@@ -1,0 +1,2 @@
+module MailshotHelper
+end
