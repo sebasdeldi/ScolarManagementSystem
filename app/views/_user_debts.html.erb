@@ -2,16 +2,19 @@
   <li class="active">
     <a href="#1" data-toggle="tab">Información</a>
   </li>
-  <% if user.has_role? :student and (current_user.has_role? :admin or current_user.username == user.username) %>
-  	<li>
-  		<a href="#2" data-toggle="tab">Deudas <span class="badge"><%= user.debts.count %></span></a>
-  	</li>
-  <% end %>
+	<% if user.has_role? :student and (current_user.has_role? :admin or current_user.username == user.username) %>
+		<li>
+			<a href="#2" data-toggle="tab">Deudas <span class="badge"><%= user.debts.count %></span></a>
+		</li>
+	<% end %>
 	<% if user.has_role? :student%>
 		<li>
 			<a href="#3" data-toggle="tab">Notas <span class="badge"><%= notes.where(student_id: user.id).count %></span></a>
 		</li>
 	<% end %>
+	<li>
+		<a href="#4" data-toggle="tab">Circulares <span class="badge"><%= mailshots.count %></span></a>
+	</li>
 </ul>
 
 <div class="tab-content ">
@@ -201,8 +204,34 @@
 		<% end %>
 
 	</div>
+
+	<div class="tab-pane" id="4">
+	  <br>
+	  <br>
+	  <% mailshots.each do |mailshot| %>
+
+	    <%= link_to mailshot, class: "no-style" do%>
+	      <div class="panel panel-default" title="Leer circular.">
+	        <!-- Default panel contents -->
+	        <div class="panel-heading"><b><%= mailshot.title %></b></div>
+
+	        <ul class="list-group">
+	          <li class="list-group-item"><b>Para: </b><%= mailshot.grade %></li>
+	          <li class="list-group-item"><b>Creado por: </b><%= User.find(mailshot.user_id.to_s).names %> <%= User.find(mailshot.user_id.to_s).last_names  %></li>
+	          <li class="list-group-item"><b>Fecha: </b><%= mailshot.created_at %></li>
+	        </ul>
+	      </div>
+	    <% end %>
+	    <br>
+	  <% end %>
+	  <%= will_paginate @mailshots, renderer: BootstrapPagination::Rails, previous_label: "Anterior", next_label: "Siguiente", outer_window: 0 %>
+	</div>
 </div>
 <script type="text/javascript">
+
+	$(function () {
+	  $('.panel').tooltip();
+	})
 
 	window.onunload = unloadPage;
 	function unloadPage()

@@ -7,7 +7,11 @@ class MailshotsController < ApplicationController
   	mailshot = Mailshot.new(mailshot_params)
   	mailshot.user_id = params[:user_id]
   	mailshot.save
-  	redirect_to :back
+  	redirect_to root_path
+  end
+
+  def show
+  	@mailshot = Mailshot.find(params[:id])
   end
 
   def destroy

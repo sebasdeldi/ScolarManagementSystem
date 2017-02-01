@@ -8,12 +8,15 @@ class UsersController < ApplicationController
 			@students = User.with_role(:student).paginate(:page => params[:page], :per_page => 15)
 			@teachers = User.with_role(:teacher).paginate(:page => params[:page], :per_page => 15)
 		end
+		@mailshots = Mailshot.all.order("created_at DESC").paginate(:page => params[:page], :per_page => 10)
 	end
 
 	def show
 		@notes = Note.all.paginate(:page => params[:page], :per_page => 15)
 		@students = User.with_role(:student)
 		@user = User.find(params[:id])
+		@mailshots = Mailshot.all.order("created_at DESC").paginate(:page => params[:page], :per_page => 10)
+
 
 
 		if params[:search]
