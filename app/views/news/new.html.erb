@@ -1,0 +1,52 @@
+<% if current_user and current_user.has_role? :admin %>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<h1>Creación de noticias.</h1>
+				<br>
+				<div class="alert alert-warning" role="alert">Esta información estará disponible para todo el mundo, incluso personas ajenas a la institución.</div>
+				<br>
+				<div class="form-group">
+					<%= form_for @news do |f| %>
+						<%= hidden_field_tag "user_id", current_user.id %>
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="form-group">
+							  		<%= f.text_field :title, class: "form-control input-lg mailshot-field", placeholder: "Titulo de la noticia." %>
+								</div>
+							</div>
+						</div>
+
+					  	<br>
+					  	<div class="row">
+					  		<div class="col-sm-12">
+					  			<div class="form-group">
+					  				<%= f.text_area :body, class: "form-control input-lg ckeditor", placeholder: "Contenido de la noticia.", rows:"40"%>
+					  			</div>
+
+					  			<div class="form-group">
+					  				<%= f.submit "Crear Noticia", class: "btn btn-primary" %>
+					  			</div>
+					  		</div>
+					  	</div>
+					<% end %>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<script type="text/javascript">
+		$("#mailshot_grade").attr("class", "selectpicker");
+		$("#mailshot_grade").attr("title", "Grupos a los que pertenece.");
+		$("#mailshot_grade button").attr("class", "mailshot-select") ;
+		$(".selectpicker").attr("data-width", "100%");
+		$('.ckeditor').ckeditor({
+		  // optional config
+		});
+	</script>
+<% else %>
+	<h1>No tienes permiso para acceder a esta sección.</h1>
+<% end %>

@@ -1,16 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'mailshot/new'
-
-  get 'mailshot/create'
-
-  get 'mailshot/destroy'
-
-  get 'debts/new'
-
-  get 'debts/create'
-
-  get 'debts/delete'
 
   devise_for :users, controllers: { registrations: 'users/registrations' }
   root "users#index"
@@ -20,6 +9,7 @@ Rails.application.routes.draw do
   resources :debts
   resources :users
   resources :mailshots
+  resources :news
 
 
 

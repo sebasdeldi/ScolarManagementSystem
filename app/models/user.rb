@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_many :notes
   has_many :debts
   has_many :mailshots
+  has_many :news
 
   def assign_role
   	if self.username == "admin"
