@@ -8,6 +8,21 @@ $dark-blue: #152977;
     list-style: none;
 }
 
+.bootstrap-select > .dropdown-toggle.bs-placeholder, .bootstrap-select > .dropdown-toggle.bs-placeholder:active, .bootstrap-select > .dropdown-toggle.bs-placeholder:focus, .bootstrap-select > .dropdown-toggle.bs-placeholder:hover {
+    color: #999;
+    height: 45px;
+}
+
+
+.admin{
+    list-style: none;
+    margin-left: 90px;
+}
+
+.admin li button{
+    margin-right: 20px;
+}
+
 .separated-icon{
     margin-right: 20px;
     text-align: center;

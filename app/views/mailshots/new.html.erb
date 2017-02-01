@@ -1,0 +1,46 @@
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<h1>Creación de circulares.</h1>
+			<br>
+			<div class="form-group">
+				<%= form_for @mailshot do |f| %>
+					<%= hidden_field_tag "user_id", current_user.id %>
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="form-group">
+						  		<%= f.text_field :title, class: "form-control input-lg", placeholder: "Titulo de la circular." %>
+							</div>
+						</div>
+
+						<div class="col-sm-6">
+							<div class="form-group">
+								<%= f.select(:grade, [['Preescolar'], ['Primaria'],["Secundaria"], ["Todos"]]) %>
+							</div>
+						</div>
+					</div>
+
+				  	<br>
+				  	<div class="row">
+				  		<div class="col-sm-12">
+				  			<div class="form-group">
+				  				<%= f.text_area :body, class: "form-control input-lg", placeholder: "Contenido de la circular.", rows:"20"%>
+				  			</div>
+
+				  			<div class="form-group">
+				  				<%= f.submit "Crear circular", class: "btn btn-primary" %>
+				  			</div>
+				  		</div>
+				  	</div>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$("#mailshot_grade").attr("class", "selectpicker");
+	$("#mailshot_grade").attr("title", "Grupos a los que pertenece.");
+	$("#mailshot_grade button").attr("class", "mailshot-select") ;
+	$(".selectpicker").attr("data-width", "100%");
+</script>

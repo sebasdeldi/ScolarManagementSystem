@@ -15,12 +15,19 @@
         <% end %>
 
 
-        <ul class=" navbar-nav navbar-right">
+        <ul class=" navbar-nav admin">
+          <li>
+            <%= link_to new_mailshot_path, class: "no-space" do %>
+              <button type="button" class="btn btn-default navbar-btn">Crear Circular</button>
+            <% end %>
+          </li>
+
           <li>
             <%= link_to new_user_registration_path, class: "no-space" do %>
               <button type="button" class="btn btn-default navbar-btn">Agregar Usuario</button>
             <% end %>
           </li>
+
           <li><p class="invisible">aaaaaa    </p></li>
         </ul>
       <% end %>
