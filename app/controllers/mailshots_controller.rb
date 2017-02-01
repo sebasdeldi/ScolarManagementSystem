@@ -15,6 +15,9 @@ class MailshotsController < ApplicationController
   end
 
   def destroy
+    mailshot = Mailshot.find(params[:id])
+    mailshot.destroy
+    redirect_to root_path
   end
 
   private
