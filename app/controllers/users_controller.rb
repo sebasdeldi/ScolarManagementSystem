@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+	layout "landing", :only => :index
 
 	def index
 		if params[:search]

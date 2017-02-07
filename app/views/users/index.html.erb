@@ -1,11 +1,11 @@
 <% if current_user %>
-  <% if current_user.has_role? :admin %>
-    <%= render "/admin_panel" %>
-  <% else %>
-  	<%= render "/landing_page" %>
-  <% end %>
+	<% if current_user.has_role? :admin %>
+		<%= render "/admin_panel" %>
+  	<% else %>
+  		<%= render "/landing_page" %>
+  	<% end %>
 <% else %>
-  <%= render "/landing_page" %>
+  	<%= render "/landing_page" %>
 <% end %>
 
 
